@@ -57,6 +57,7 @@ for(let i = 1; i <= nombre; i++){
             board.querySelectorAll(".box-clicked").forEach(function(validBox){
                 validBox.classList.remove("box-clicked");
             })
+            shuffleChildren(board);
         }
         else{
             showReaction("notice", newbox);
