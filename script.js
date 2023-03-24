@@ -25,7 +25,18 @@ const board = document.querySelector("#board");
 
 let nb = 1;
 
-for(let i = 1; i <= 10; i++){
+let nombre = prompt("Combien de cases ?");
+while(isNaN(nombre)){
+    alert("Ce n'est pas un nombre");
+    nombre = prompt("Combien de cases ?");
+}
+while(nombre < 0){
+    alert("Il faut un nombre supérieur à 0 !");
+    nombre = prompt("Combien de cases ?");
+}
+
+
+for(let i = 1; i <= nombre; i++){
     let newbox = box.cloneNode();
     newbox.innerText = i;
     board.appendChild(newbox);
