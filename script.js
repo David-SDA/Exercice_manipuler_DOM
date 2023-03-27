@@ -99,6 +99,7 @@ for(let i = 1; i <= nombre; i++){
                 partieEnCours = false;/* On a fini, la partie n'est plus en cours */
             }
             nb++;
+            shuffleChildren(board);
         }
         else if(i > nb){
             showReaction("error", newbox);
