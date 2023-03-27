@@ -18,10 +18,21 @@ function showReaction(type, clickedBox){
     }
 }
 
-/* Fonction pour démarrer le timer */
-function demarrerTimer(){
+/* Fonction pour faire apparaître les secondes écoulées */
+function tempsEcoule(){
     secondes++;
     timer.innerHTML = secondes;
+}
+
+/* Fonction pour démarrer le timer */
+function demarrerTimer(){
+    temps = setInterval(tempsEcoule, 1000);
+}
+
+/* Fonction pour arréter l'écoulement du temps */
+function stopTimer(){
+    clearInterval(temps);
+    secondes = -1;
 }
 
 const box = document.createElement("div");
@@ -48,11 +59,30 @@ while(nombre < 0){
     nombre = prompt("Combien de cases ?");
 }
 
+/* Demarrage du timer */
+demarrerTimer();
+
+/* Ce qu'on fait quand on touche le bouton rejouer */
+bouton.addEventListener('click', function(){
+    nb = 1;
+    /* Les box ne sont plus vertes */
+    board.querySelectorAll(".box-clicked").forEach(function(validBox){
+        validBox.classList.remove("success");
+    })
+    /* Les box ne sont plus dans l'état cliqué */
+    board.querySelectorAll(".box-clicked").forEach(function(validBox){
+        validBox.classList.remove("box-clicked");
+    })
+    /* On remélange tout */
+    shuffleChildren(board);
+    /* On redémarre le timer */
+    demarrerTimer();
+})
+
 for(let i = 1; i <= nombre; i++){
     let newbox = box.cloneNode();
     newbox.innerText = i;
     board.appendChild(newbox);
-
     newbox.addEventListener("click", function(){
         if(i == nb){
             newbox.classList.add("box-clicked");
@@ -60,16 +90,17 @@ for(let i = 1; i <= nombre; i++){
                 board.querySelectorAll(".box").forEach(function(box){
                     showReaction("success", box);
                 })
+                stopTimer();
             }
             nb++;
         }
         else if(i > nb){
             showReaction("error", newbox);
             nb = 1;
-            secondes = -1;
             board.querySelectorAll(".box-clicked").forEach(function(validBox){
                 validBox.classList.remove("box-clicked");
             })
+            stopTimer();
             shuffleChildren(board);
         }
         else{
@@ -79,17 +110,3 @@ for(let i = 1; i <= nombre; i++){
 }
 
 shuffleChildren(board);
-
-/* Quand la page est chargée, on démarre le timer */
-window.addEventListener('load', function(){
-    setInterval(demarrerTimer, 1000);
-});
-
-bouton.addEventListener('click', function(){
-    nb = 1;
-    secondes = -1;
-    board.querySelectorAll(".box-clicked").forEach(function(validBox){
-        validBox.classList.remove("box-clicked");
-    })
-    shuffleChildren(board);
-})
