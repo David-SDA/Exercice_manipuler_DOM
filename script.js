@@ -42,6 +42,9 @@ const board = document.querySelector("#board");
 
 let nb = 1;
 
+/* Est-ce que la partie est en cours */
+let partieEnCours = true;
+
 /* On récupère le timer */
 let timer = document.getElementById('timer');
 let secondes = 0;
@@ -64,7 +67,8 @@ demarrerTimer();
 
 /* Ce qu'on fait quand on touche le bouton rejouer */
 bouton.addEventListener('click', function(){
-    nb = 1;
+    if(!partieEnCours){
+        nb = 1;
     /* Les box ne sont plus vertes */
     board.querySelectorAll(".box-clicked").forEach(function(validBox){
         validBox.classList.remove("success");
@@ -77,6 +81,7 @@ bouton.addEventListener('click', function(){
     shuffleChildren(board);
     /* On redémarre le timer */
     demarrerTimer();
+    }
 })
 
 for(let i = 1; i <= nombre; i++){
@@ -91,6 +96,7 @@ for(let i = 1; i <= nombre; i++){
                     showReaction("success", box);
                 })
                 stopTimer();
+                partieEnCours = false;/* On a fini, la partie n'est plus en cours */
             }
             nb++;
         }
@@ -100,7 +106,6 @@ for(let i = 1; i <= nombre; i++){
             board.querySelectorAll(".box-clicked").forEach(function(validBox){
                 validBox.classList.remove("box-clicked");
             })
-            stopTimer();
             shuffleChildren(board);
         }
         else{
