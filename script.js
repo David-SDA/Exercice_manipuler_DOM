@@ -35,6 +35,9 @@ let nb = 1;
 let timer = document.getElementById('timer');
 let secondes = 0;
 
+/* On récupère le boutton */
+let bouton = document.getElementById('bouton');
+
 let nombre = prompt("Combien de cases ?");
 while(isNaN(nombre)){
     alert("Ce n'est pas un nombre");
@@ -63,6 +66,7 @@ for(let i = 1; i <= nombre; i++){
         else if(i > nb){
             showReaction("error", newbox);
             nb = 1;
+            secondes = -1;
             board.querySelectorAll(".box-clicked").forEach(function(validBox){
                 validBox.classList.remove("box-clicked");
             })
@@ -80,3 +84,12 @@ shuffleChildren(board);
 window.addEventListener('load', function(){
     setInterval(demarrerTimer, 1000);
 });
+
+bouton.addEventListener('click', function(){
+    nb = 1;
+    secondes = -1;
+    board.querySelectorAll(".box-clicked").forEach(function(validBox){
+        validBox.classList.remove("box-clicked");
+    })
+    shuffleChildren(board);
+})
