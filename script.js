@@ -18,12 +18,22 @@ function showReaction(type, clickedBox){
     }
 }
 
+/* Fonction pour démarrer le timer */
+function demarrerTimer(){
+    secondes++;
+    timer.innerHTML = secondes;
+}
+
 const box = document.createElement("div");
 box.classList.add("box");
 
 const board = document.querySelector("#board");
 
 let nb = 1;
+
+/* On récupère le timer */
+let timer = document.getElementById('timer');
+let secondes = 0;
 
 let nombre = prompt("Combien de cases ?");
 while(isNaN(nombre)){
@@ -34,7 +44,6 @@ while(nombre < 0){
     alert("Il faut un nombre supérieur à 0 !");
     nombre = prompt("Combien de cases ?");
 }
-
 
 for(let i = 1; i <= nombre; i++){
     let newbox = box.cloneNode();
@@ -66,3 +75,8 @@ for(let i = 1; i <= nombre; i++){
 }
 
 shuffleChildren(board);
+
+/* Quand la page est chargée, on démarre le timer */
+window.addEventListener('load', function(){
+    setInterval(demarrerTimer, 1000);
+});
